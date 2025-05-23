@@ -30,7 +30,7 @@ const toggleLike = (target) => {
     })
 }
 
-likeGlyphs.forEach(glyph => glyph.addEventListener('click', (e) => toggleLike(glyph)))
+likeGlyphs.forEach(glyph => glyph.addEventListener('click', () => toggleLike(glyph)))
 
 
 
