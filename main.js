@@ -4,12 +4,33 @@ const FULL_HEART = '♥'
 
 // Your JavaScript code goes here!
 const likeGlyphs = document.querySelectorAll('.like-glyph')
+const errorBanner = document.querySelector('#modal')
+const errorBannerMsg = document.querySelector('#modal-message')
 
-const toggleLike = () => {
-  console.log('yay')
+const toggleLike = (target) => {
+  mimicServerCall()
+    .then(res => {
+      if (res === 'Pretend remote server notified of action!') {
+        if (target.textContent === FULL_HEART) {
+          target.textContent = EMPTY_HEART
+          target.classList.remove('activated-heart')
+        } else if (target.textContent === EMPTY_HEART) {
+          target.textContent = FULL_HEART
+          target.classList.add('activated-heart')
+        } else {
+          target.textContent = FULL_HEART
+          target.classList.add('activated-heart')
+        }
+      }
+    })
+    .catch(() => {
+      errorBanner.classList.remove('hidden')
+      errorBannerMsg.textContent = 'Random server error. Try again.'
+      setTimeout(() => errorBanner.classList.add('hidden'), "3000")
+    })
 }
 
-likeGlyphs.forEach(glyph => glyph.addEventListener('click', toggleLike))
+likeGlyphs.forEach(glyph => glyph.addEventListener('click', (e) => toggleLike(glyph)))
 
 
 
